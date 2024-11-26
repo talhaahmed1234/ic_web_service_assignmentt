@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web Services</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Simple Web Services</h1>
+
+    <!-- Reverse String Service -->
+    <form id="reverseForm">
+        <h2>Reverse String Service</h2>
+        <input type="text" id="reverseInput" placeholder="Enter a string" required>
+        <button type="submit">Reverse</button>
+    </form>
+    <p id="reverseResult"></p>
+
+    <!-- Square Number Service -->
+    <form id="squareForm">
+        <h2>Square Number Service</h2>
+        <input type="number" id="squareInput" placeholder="Enter a number" required>
+        <button type="submit">Square</button>
+    </form>
+    <p id="squareResult"></p>
+
+    <script>
+        // Reverse String Service
+        document.getElementById('reverseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('reverseInput').value;
+            const response = await fetch('/api/reverse', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: input })
+            });
+            const data = await response.json();
+            document.getElementById('reverseResult').textContent = `Reversed String: ${data.result}`;
+        });
+
+        // Square Number Service
+        document.getElementById('squareForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('squareInput').value;
+            const response = await fetch('/api/square', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ number: Number(input) })
+            });
+            const data = await response.json();
+            document.getElementById('squareResult').textContent = `Squared Value: ${data.result}`;
+        });
+    </script>
+</body>
+</html>
